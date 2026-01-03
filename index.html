@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sane Tejaswi | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --bg-color: #0f172a;       /* Dark Navy Background */
+            --text-primary: #f8fafc;   /* Off-white text */
+            --text-secondary: #94a3b8; /* Muted text */
+            --accent: #38bdf8;         /* Sky Blue Accent */
+            --card-bg: #1e293b;        /* Card Background */
+            --font-main: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- STICKY NAVIGATION --- */
+        #navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 8%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        #navbar.scrolled {
+            background-color: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            padding: 1rem 8%;
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--accent); letter-spacing: -1px; }
+
+        .nav-links { display: flex; list-style: none; gap: 2.5rem; }
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+
+        .btn-highlight {
+            border: 1px solid var(--accent);
+            padding: 0.5rem 1.2rem;
+            border-radius: 4px;
+            color: var(--accent) !important;
+        }
+        .btn-highlight:hover {
+            background-color: var(--accent);
+            color: var(--bg-color) !important;
+        }
+
+        /* --- HERO SECTION --- */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10%;
+            position: relative;
+        }
+
+        .hero-content { max-width: 600px; z-index: 2; }
+        .greeting { color: var(--accent); font-weight: 600; display: block; margin-bottom: 1rem; }
+        
+        h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 { font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 1.5rem; font-weight: 400; }
+        
+        .hero-p { color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem; max-width: 480px; }
+
+        .cta-group { display: flex; gap: 1rem; }
+        
+        .btn {
+            padding: 12px 28px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary { background-color: var(--accent); color: var(--bg-color); }
+        .btn-secondary { border: 1px solid #334155; color: var(--text-primary); }
+        .btn:hover { transform: translateY(-3px); }
+
+        /* Floating Animation for Hero Visual */
+        .hero-visual {
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+
+        .code-block {
+            background: #1e293b;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            font-family: 'Courier New', monospace;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .key { color: #c084fc; } /* Purple */
+        .str { color: #86efac; } /* Green */
+
+        /* --- SECTIONS GENERAL --- */
+        section { padding: 6rem 10%; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-title { font-size: 2.2rem; margin-bottom: 1rem; }
+        .section-line { width: 60px; height: 4px; background: var(--accent); margin: 0 auto; border-radius: 2px; }
+
+        /* --- ABOUT & SKILLS --- */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        .about-text p { margin-bottom: 1.5rem; color: var(--text-secondary); }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .skill-item {
+            background: var(--card-bg);
+            padding: 1rem;
+            text-align: center;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            font-weight: 500;
+        }
+
+        /* --- PROJECTS --- */
+        .project-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border-top: 4px solid var(--accent);
+            margin-bottom: 2rem;
+            transition: transform 0.3s;
+        }
+        .project-card:hover { transform: translateY(-5px); }
+        .tech-tags { margin-top: 1rem; display: flex; gap: 0.8rem; flex-wrap: wrap; }
+        .tag { font-size: 0.8rem; background: #0f172a; padding: 4px 10px; border-radius: 20px; color: var(--accent); }
+
+        /* --- GALLERY (Certifications) --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .gallery-item {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            cursor: pointer;
+            background: #1e293b;
+        }
+        .gallery-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
+            opacity: 0.8;
+        }
+        .gallery-item:hover img { transform: scale(1.1); opacity: 1; }
+        
+        .overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            padding: 1rem;
+            background: linear-gradient(to top, rgba(15,23,42,0.9), transparent);
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        .gallery-item:hover .overlay { transform: translateY(0); }
+
+        /* --- CONTACT & FOOTER --- */
+        #contact { text-align: center; background: #0b1120; }
+        .contact-methods { display: flex; justify-content: center; gap: 2rem; margin-top: 2rem; }
+        .contact-link { color: var(--text-secondary); font-size: 1.2rem; text-decoration: none; transition: 0.3s; }
+        .contact-link:hover { color: var(--accent); }
+
+        /* --- MOBILE RESPONSIVE --- */
+        .burger { display: none; cursor: pointer; }
+        .burger div { width: 25px; height: 3px; background: var(--text-primary); margin: 5px; transition: 0.3s; }
+
+        @media (max-width: 768px) {
+            #navbar { padding: 1rem 5%; }
+            .nav-links {
+                position: absolute; top: 70px; right: 0; height: 90vh; width: 60%;
+                background: var(--card-bg); flex-direction: column; align-items: center;
+                justify-content: center; transform: translateX(100%); transition: 0.4s ease-in;
+            }
+            .nav-active { transform: translateX(0%); }
+            .burger { display: block; }
+            .about-container { grid-template-columns: 1fr; }
+            .hero-visual { display: none; }
+            h1 { font-size: 2.5rem; }
+        }
+
+        /* --- ANIMATION UTILS --- */
+        .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <header id="navbar">
+        <div class="logo">TEJA.</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact" class="btn-highlight">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="burger" onclick="toggleNav()">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </header>
+
+    <section id="hero">
+        <div class="hero-content">
+            <span class="greeting fade-in">Hello, I'm</span>
+            <h1 class="fade-in">Sane Tejaswi</h1>
+            <h2 class="fade-in">Aspiring Software Developer</h2>
+            <p class="hero-p fade-in">
+                B.Tech Computer Science student specializing in AI. Passionate about Full-Stack Development, Java, and solving real-world problems.
+            </p>
+            <div class="cta-group fade-in">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="Teju.pdf" download class="btn btn-secondary">
+                    <i class="fas fa-download"></i> Download CV
+                </a>
+            </div>
+        </div>
+        
+        <div class="hero-visual">
+            <div class="code-block">
+                <p><span class="key">const</span> dev = {</p>
+                <p>&nbsp;&nbsp;name: <span class="str">"Tejaswi"</span>,</p>
+                <p>&nbsp;&nbsp;role: <span class="str">"Developer"</span>,</p>
+                <p>&nbsp;&nbsp;focus: [<span class="str">"Java"</span>, <span class="str">"AI"</span>]</p>
+                <p>};</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="section-header">
+            <h3 class="section-title">About Me</h3>
+            <div class="section-line"></div>
+        </div>
+        <div class="about-container">
+            <div class="about-text fade-in">
+                <p>
+                    I am currently pursuing a <strong>B.Tech in Computer Science (Artificial Intelligence)</strong> at Audisankara College of Engineering & Technology, maintaining an aggregate of <strong>8.26 CGPA</strong>.
+                </p>
+                <p>
+                    My experience includes an internship at <strong>KodNest</strong>, where I gained exposure to software development fundamentals, OOP concepts, and real-world coding practices. I am motivated, detail-oriented, and eager to contribute to innovative tech solutions.
+                </p>
+            </div>
+            <div class="skills-wrapper fade-in">
+                <h4>Technical Arsenal</h4>
+                <div class="skills-grid">
+                    <div class="skill-item">Java</div>
+                    <div class="skill-item">Python</div>
+                    <div class="skill-item">SQL</div>
+                    <div class="skill-item">HTML & CSS</div>
+                    <div class="skill-item">Git / GitHub</div>
+                    <div class="skill-item">VS Code</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="section-header">
+            <h3 class="section-title">Featured Projects</h3>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="project-card fade-in">
+            <h3>Cancer Detection Awareness Web App</h3>
+            <p style="margin-top: 10px; color: var(--text-secondary);">
+                Developed an interactive web page to educate users on early cancer symptoms. 
+                Implemented form inputs and JS-based conditional alerts to enhance user awareness and engagement.
+                Designed a clean and responsive UI.
+            </p>
+            <div class="tech-tags">
+                <span class="tag">HTML</span>
+                <span class="tag">CSS</span>
+                <span class="tag">JavaScript</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <div class="section-header">
+            <h3 class="section-title">Certifications & Interests</h3>
+            <p style="color: var(--text-secondary);">Hover to view details</p>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-item fade-in">
+                <img src="SQL.png" alt="SQL Certificate">
+                <div class="overlay">
+                    <h4>DavidsonX (edX)</h4>
+                    <p>Introduction to SQL</p>
+                </div>
+            </div>
+
+            <div class="gallery-item fade-in">
+                <img src="IOT.png" alt="IoT Certificate">
+                <div class="overlay">
+                    <h4>NPTEL (IIT Kharagpur)</h4>
+                    <p>Introduction to IoT (Elite)</p>
+                </div>
+            </div>
+
+            <div class="gallery-item fade-in">
+                <img src="PYTHON.png" alt="Python Certificate">
+                <div class="overlay">
+                    <h4>IBM (edX)</h4>
+                    <p>Python Basics for Data Science</p>
+                </div>
+            </div>
+
+            <div class="gallery-item fade-in">
+                <img src="HTML.png" alt="HTML Certificate">
+                <div class="overlay">
+                    <h4>W3Cx (edX)</h4>
+                    <p>HTML5 & CSS Fundamentals</p>
+                </div>
+            </div>
+
+            <div class="gallery-item fade-in">
+                <img src="CC.png" alt="Cloud Certificate">
+                <div class="overlay">
+                    <h4>NPTEL (IIT Kharagpur)</h4>
+                    <p>Cloud Computing</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h3 class="section-title">Get In Touch</h3>
+        <p style="color: var(--text-secondary);">Open for opportunities and collaborations.</p>
+        <div class="contact-methods">
+            <a href="mailto:sanetejaswi@355gmail.com" class="contact-link">
+                <i class="fas fa-envelope"></i> Email
+            </a>
+            <a href="tel:8374235635" class="contact-link">
+                <i class="fas fa-phone"></i> Call
+            </a>
+        </div>
+        <p style="margin-top: 3rem; font-size: 0.9rem; color: #475569;">
+            &copy; 2026 Sane Tejaswi. All Rights Reserved.
+        </p>
+    </section>
+
+    <script>
+        // Mobile Nav Toggle
+        const toggleNav = () => {
+            const nav = document.querySelector('.nav-links');
+            const burger = document.querySelector('.burger');
+            nav.classList.toggle('nav-active');
+        }
+
+        // Sticky Navbar Logic
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll Animation Logic (Intersection Observer)
+        const observerOptions = { threshold: 0.2 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
